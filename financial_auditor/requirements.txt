@@ -1,0 +1,9 @@
+# --- requirements.txt ---
+streamlit
+pandas
+fpdf
+PyMuPDF
+pdfplumber
+matplotlib
+openpyxl
+
