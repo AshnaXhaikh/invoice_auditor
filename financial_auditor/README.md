@@ -100,10 +100,3 @@ More info: [Wikipedia - Benford's Law](https://en.wikipedia.org/wiki/Benford%27s
 ## 📄 License
 
 MIT License – feel free to use and improve.
-
----
-
-```
-
-Let me know if you want to embed screenshots, add badges, or generate a PDF version of this README.
-```
