@@ -7,14 +7,21 @@ from collections import Counter
 
 def run_benford_analysis(data):
     if isinstance(data, str):
-        numbers = list(map(float, re.findall(r"\\b\\d+(?:\\.\\d+)?\\b", data)))
+        numbers = list(map(float, re.findall(r"\b\d+(?:\.\d+)?\b", data)))
     else:
         numbers = pd.to_numeric(data.select_dtypes(include=["number"]).stack(), errors='coerce').dropna().values
+
+    # ✅ Avoid division by zero
+    if len(numbers) == 0:
+        raise ValueError("No valid numeric data found for Benford analysis.")
 
     first_digits = [int(str(abs(num))[0]) for num in numbers if str(abs(num))[0].isdigit() and num != 0]
     observed = Counter(first_digits)
 
     total = sum(observed.values())
+    if total == 0:
+        raise ValueError("No leading digits found for Benford analysis.")
+
     observed_freq = [observed.get(d, 0)/total for d in range(1,10)]
     expected_freq = [np.log10(1 + 1/d) for d in range(1,10)]
 
@@ -28,3 +35,4 @@ def run_benford_analysis(data):
 
     summary = {"observed": observed_freq, "expected": expected_freq}
     return summary, fig
+
